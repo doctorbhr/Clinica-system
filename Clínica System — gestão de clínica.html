@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Clínica System — gestão de clínica</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Manrope:wght@400;600;800&display=swap">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#fbf6fb;--card:#fffdfe;--tx:#2d2338;--mut:#8b8099;--bd:#f0e7f4;--ac:#9266d3;--acs:#f1e9fb;--ro:#e79bb9;--ros:#fde9f1;--go:#c8a56b;--ok:#3f9e7b;--bad:#d8557f;--g1:#f9d9e8;--g2:#e5dafc;--sh:0 14px 32px -20px rgba(110,70,170,.45);--fx:#fff}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#17121f;--card:#1f1829;--tx:#f1eaf8;--mut:#a99bbb;--bd:#33283f;--ac:#c3a2f5;--acs:#2e2442;--ro:#f2a9c6;--ros:#3a2231;--go:#dcc08c;--ok:#6ee0b0;--bad:#ff8fb0;--g1:#3a2140;--g2:#2a2150;--sh:none;--fx:#1a1030}}
+:root[data-theme="dark"]{--bg:#17121f;--card:#1f1829;--tx:#f1eaf8;--mut:#a99bbb;--bd:#33283f;--ac:#c3a2f5;--acs:#2e2442;--ro:#f2a9c6;--ros:#3a2231;--go:#dcc08c;--ok:#6ee0b0;--bad:#ff8fb0;--g1:#3a2140;--g2:#2a2150;--sh:none;--fx:#1a1030}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;color:var(--tx);font:400 15px/1.5 Manrope,system-ui,-apple-system,Segoe UI,sans-serif;background:radial-gradient(800px 380px at 92% -8%,var(--g1),transparent 70%),radial-gradient(700px 360px at -8% 6%,var(--g2),transparent 70%),var(--bg);background-attachment:fixed}
+.app{max-width:1000px;margin:0 auto;padding:18px 16px 40px}
+header{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.logo{font:700 28px/1 'Cormorant Garamond',Georgia,serif;letter-spacing:.01em}
+.logo::before{content:"\273F";color:var(--ro);margin-right:8px;font-size:22px}
+.logo i{font-style:italic;font-weight:600;color:var(--ac)}
+nav{display:flex;gap:4px;background:var(--card);border:1px solid var(--bd);border-radius:99px;padding:4px;box-shadow:var(--sh)}
+nav button{border:0;background:none;color:var(--mut);font:600 14px Manrope,system-ui,sans-serif;padding:8px 16px;border-radius:99px;cursor:pointer}
+nav button.on{background:linear-gradient(135deg,var(--ac),var(--ro));color:var(--fx)}
+nav button:focus-visible,.btn:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.hero{background:linear-gradient(120deg,var(--ros),var(--acs));border:1px solid var(--bd);border-radius:26px;padding:22px 24px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.hero h1{font:600 32px/1.1 'Cormorant Garamond',Georgia,serif;margin:0 0 4px}
+.hero p{margin:0;color:var(--mut)}
+.pill{background:var(--card);border-radius:99px;padding:8px 14px;font-weight:600;font-size:13px;color:var(--ac);border:1px solid var(--bd)}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:22px;padding:18px;margin-bottom:16px;box-shadow:var(--sh)}
+h2{font:700 22px/1.2 'Cormorant Garamond',Georgia,serif;margin:0 0 12px}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px}
+.kpi{background:var(--card);border:1px solid var(--bd);border-radius:20px;padding:14px 16px;box-shadow:var(--sh)}
+.kpi small{color:var(--mut);display:block}
+.kpi b{font:700 28px/1.2 'Cormorant Garamond',Georgia,serif}
+.grid2{display:grid;grid-template-columns:1.6fr 1fr;gap:16px}
+@media(max-width:720px){.grid2{grid-template-columns:1fr}.kpi b{font-size:21px}.hero h1{font-size:26px}}
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 0;border-top:1px solid var(--bd);flex-wrap:wrap}
+.row:first-of-type{border-top:0}
+.row .l{min-width:0;flex:1 1 180px}
+.row .l b{display:block}
+.row .l span{color:var(--mut);font-size:13px}
+.btn{border:0;background:linear-gradient(135deg,var(--ac),var(--ro));color:var(--fx);font:600 13px Manrope,system-ui,sans-serif;padding:9px 16px;border-radius:99px;cursor:pointer}
+.btn.g{background:var(--acs);color:var(--ac)}
+select,input{font:400 14px Manrope,system-ui,sans-serif;padding:9px 12px;border-radius:12px;border:1px solid var(--bd);background:var(--card);color:var(--tx);max-width:100%}
+.tag{font-size:12px;font-weight:600;padding:3px 10px;border-radius:99px;background:var(--acs);color:var(--ac)}
+.tag.ok{background:var(--acs);color:var(--ok)}.tag.low{background:var(--ros);color:var(--bad)}
+.form{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:6px}
+.form input[type=text]{flex:1 1 160px}
+.bar{height:7px;border-radius:9px;background:var(--acs);overflow:hidden;width:120px}
+.bar i{display:block;height:100%;border-radius:9px;background:linear-gradient(90deg,var(--ac),var(--ro))}
+.bar.low i{background:var(--bad)}
+.pos{color:var(--ok);font-weight:700}.neg{color:var(--bad);font-weight:700}
+.leg{display:flex;gap:14px;color:var(--mut);font-size:13px;margin-top:6px}
+.leg i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px}
+#toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--tx);color:var(--bg);padding:11px 18px;border-radius:99px;font-weight:600;font-size:14px;opacity:0;pointer-events:none;transition:opacity .2s;max-width:92vw;text-align:center}
+#toast.on{opacity:1}
+.empty{color:var(--mut);padding:10px 0}
+.who{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+</style>
+</head>
+<body>
+<div class="app">
+<header>
+<div class="logo">Clínica <i>System</i></div>
+<nav id="nav"></nav>
+<div class="who" id="who"></div>
+</header>
+<main id="v"></main>
+</div>
+<div id="toast" role="status" aria-live="polite"></div>
+<script>
+var KEY='clinflow-v1',S,tab='at';
+var brl=function(n){return n.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})};
+function seed(){return{
+ prods:[{id:1,n:'Toxina botulínica 50U',q:6,m:3},{id:2,n:'Ácido hialurônico 1 ml',q:9,m:4},{id:3,n:'Luvas de procedimento',q:40,m:30},{id:4,n:'Seringas 1 ml',q:35,m:20},{id:5,n:'Gel condutor',q:3,m:2}],
+ procs:{'Limpeza de pele':{v:180,c:{3:2,5:1}},'Botox facial':{v:1200,c:{1:1,3:2,4:2}},'Preenchimento labial':{v:1500,c:{2:1,3:2,4:1}},'Consulta':{v:250,c:{3:2}}},
+ ap:[{id:1,p:'Mariana Souza',pr:'Limpeza de pele',pf:'Dra. Ana',h:'09:00',st:0},{id:2,p:'Carlos Lima',pr:'Botox facial',pf:'Dra. Ana',h:'10:30',st:0},{id:3,p:'Juliana Prado',pr:'Consulta',pf:'Dr. Paulo',h:'14:00',st:0}],
+ rc:[{d:'Ontem',t:'Preenchimento labial — Paula R.',v:1500,f:'Cartão'},{d:'Ontem',t:'Limpeza de pele — Renata M.',v:180,f:'PIX'},{d:'Seg',t:'Botox facial — Lucas A.',v:1200,f:'PIX'},{d:'Seg',t:'Consulta — Bia T.',v:250,f:'Dinheiro'}],
+ din:[2100,1800,2600,1500,3200,2400,0],dout:[900,400,1200,600,1500,700,0],nid:10,me:0,users:[{id:1,n:'Administrador',e:'admin@clinica.com',s:'admin123',p:'admin',a:1}]}}
+try{S=JSON.parse(localStorage.getItem(KEY))}catch(e){S=null}
+if(!S||!S.prods)S=seed();
+if(!S.users){S.users=seed().users;S.me=0}
+function esc(t){return String(t).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+function toast(m){var t=document.getElementById('toast');t.textContent=m;t.className='on';clearTimeout(toast.k);toast.k=setTimeout(function(){t.className=''},2800)}
+function setTab(t){tab=t;render()}
+function prodName(id){return S.prods.filter(function(p){return p.id==id})[0].n}
+function conclude(id){
+ var a=S.ap.filter(function(x){return x.id===id})[0],pr=S.procs[a.pr],f=document.getElementById('f'+id).value,low=[];
+ a.st=1;S.rc.unshift({d:'Hoje',t:a.pr+' — '+a.p,v:pr.v,f:f});S.din[6]+=pr.v;
+ for(var k in pr.c){var p=S.prods.filter(function(x){return x.id==k})[0];p.q=Math.max(0,p.q-pr.c[k]);if(p.q<=p.m)low.push(p.n)}
+ save();render();toast('Atendimento concluído: '+brl(pr.v)+' recebido e estoque atualizado'+(low.length?'. Repor: '+low.join(', '):''))}
+function addAp(){
+ var n=document.getElementById('np').value.trim();
+ if(!n){toast('Digite o nome do paciente');return}
+ S.ap.push({id:S.nid++,p:n,pr:document.getElementById('npr').value,pf:document.getElementById('npf').value,h:document.getElementById('nh').value||'08:00',st:0});
+ S.ap.sort(function(a,b){return a.h<b.h?-1:1});save();render();toast('Agendamento criado')}
+function restock(id){var p=S.prods.filter(function(x){return x.id===id})[0];p.q+=10;S.dout[6]+=60;save();render();toast('Entrada de 10 un. em '+p.n)}
+function addProd(){
+ var n=document.getElementById('pn').value.trim(),q=parseInt(document.getElementById('pq').value,10),m=parseInt(document.getElementById('pm').value,10),u=document.getElementById('pu').value,c=parseInt(document.getElementById('pc').value,10)||1;
+ if(!n){toast('Digite o nome do produto');return}
+ if(isNaN(q)||q<0){toast('Informe a quantidade em estoque');return}
+ if(isNaN(m)||m<0)m=0;
+ var id=S.nid++;S.prods.push({id:id,n:n,q:q,m:m});
+ if(u)S.procs[u].c[id]=c;
+ save();render();toast('Produto cadastrado: '+n+(u?'. Baixa automática em '+u:''))}
+function chart(){
+ var days=['','','','','','','Hoje'],d=new Date(),i;
+ for(i=0;i<6;i++){var x=new Date(d);x.setDate(d.getDate()-(6-i));days[i]=['dom','seg','ter','qua','qui','sex','sáb'][x.getDay()]}
+ var mx=Math.max.apply(null,S.din.concat(S.dout))||1,s='<svg viewBox="0 0 340 150" width="100%" role="img" aria-label="Entradas e saídas dos últimos 7 dias">';
+ for(i=0;i<7;i++){var x0=12+i*46,hi=S.din[i]/mx*100,ho=S.dout[i]/mx*100;
+  s+='<rect x="'+x0+'" y="'+(112-hi)+'" width="16" height="'+hi+'" rx="3" fill="var(--ok)"/><rect x="'+(x0+18)+'" y="'+(112-ho)+'" width="16" height="'+ho+'" rx="3" fill="var(--bad)"/><text x="'+(x0+17)+'" y="132" font-size="11" text-anchor="middle" fill="var(--mut)">'+days[i]+'</text>'}
+ return s+'</svg><div class="leg"><span><i style="background:var(--ok)"></i>Entradas</span><span><i style="background:var(--bad)"></i>Saídas</span></div>'}
+function donut(){
+ var t={},tot=0,cols=['var(--ac)','var(--ro)','var(--go)'],i=0,off=0,s='';
+ S.rc.forEach(function(r){t[r.f]=(t[r.f]||0)+r.v;tot+=r.v});
+ var svg='<svg viewBox="0 0 100 100" width="120" height="120" role="img" aria-label="Recebimentos por forma de pagamento"><g transform="rotate(-90 50 50)">';
+ for(var k in t){var len=t[k]/tot*251.3;svg+='<circle cx="50" cy="50" r="40" fill="none" stroke="'+cols[i%3]+'" stroke-width="16" stroke-dasharray="'+len+' 251.3" stroke-dashoffset="'+(-off)+'"/>';off+=len;
+  s+='<div class="row"><span><i style="display:inline-block;width:10px;height:10px;border-radius:3px;background:'+cols[i%3]+';margin-right:6px"></i>'+k+'</span><b>'+Math.round(t[k]/tot*100)+'%</b></div>';i++}
+ return '<div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap">'+svg+'</g></svg><div style="flex:1 1 130px">'+s+'</div></div>'}
+function vAt(){
+ var o=function(m){var r='';for(var k in S.procs)r+='<option>'+k+'</option>';return r},h='';
+ S.ap.forEach(function(a){var pr=S.procs[a.pr];
+  h+='<div class="row"><div class="l"><b>'+a.h+' · '+esc(a.p)+'</b><span>'+a.pr+' · '+a.pf+' · '+brl(pr.v)+'</span></div>'+
+  (a.st?'<span class="tag ok">Concluído</span>':'<select id="f'+a.id+'" aria-label="Forma de pagamento"><option>PIX</option><option>Cartão</option><option>Dinheiro</option></select><button class="btn" onclick="conclude('+a.id+')">Concluir e receber</button>')+'</div>'});
+ return '<div class="card"><h2>Novo agendamento</h2><div class="form"><input type="text" id="np" placeholder="Nome do paciente" aria-label="Nome do paciente"><select id="npr" aria-label="Procedimento">'+o()+'</select><select id="npf" aria-label="Profissional"><option>Dra. Ana</option><option>Dr. Paulo</option></select><input type="time" id="nh" value="16:00" aria-label="Horário"><button class="btn" onclick="addAp()">Agendar</button></div></div>'+
+ '<div class="card"><h2>Agenda de hoje</h2>'+(h||'<div class="empty">Nenhum atendimento. Crie o primeiro agendamento acima.</div>')+'<p class="empty" style="margin:10px 0 0;font-size:13px">Ao concluir, o valor entra no financeiro e os produtos usados saem do estoque.</p></div>'}
+function vFi(){
+ var ein=S.din.reduce(function(a,b){return a+b},0),eout=S.dout.reduce(function(a,b){return a+b},0),h='';
+ S.rc.slice(0,8).forEach(function(r){h+='<div class="row"><div class="l"><b>'+esc(r.t)+'</b><span>'+r.d+' · '+r.f+'</span></div><span class="pos">+ '+brl(r.v)+'</span></div>'});
+ return '<div class="kpis"><div class="kpi"><small>Entradas (7 dias)</small><b class="pos">'+brl(ein)+'</b></div><div class="kpi"><small>Saídas (7 dias)</small><b class="neg">'+brl(eout)+'</b></div><div class="kpi"><small>Saldo</small><b>'+brl(ein-eout)+'</b></div></div>'+
+ '<div class="grid2"><div class="card"><h2>Fluxo de caixa</h2>'+chart()+'</div><div class="card"><h2>Formas de pagamento</h2>'+donut()+'</div></div>'+
+ '<div class="card"><h2>Últimos recebimentos</h2>'+h+'</div>'}
+function vEs(){
+ var h='',n=0,po='';for(var k in S.procs)po+='<option>'+k+'</option>';
+ S.prods.forEach(function(p){var low=p.q<=p.m;if(low)n++;
+  h+='<div class="row"><div class="l"><b>'+esc(p.n)+'</b><span>Mínimo: '+p.m+'</span></div><div class="bar'+(low?' low':'')+'" aria-hidden="true"><i style="width:'+Math.min(100,p.q/(p.m*3)*100)+'%"></i></div><b style="min-width:34px;text-align:right">'+p.q+'</b>'+(low?'<span class="tag low">Repor</span>':'<span class="tag ok">Ok</span>')+'<button class="btn g" onclick="restock('+p.id+')">+10</button></div>'});
+ return '<div class="kpis"><div class="kpi"><small>Produtos</small><b>'+S.prods.length+'</b></div><div class="kpi"><small>Para repor</small><b class="'+(n?'neg':'pos')+'">'+n+'</b></div><div class="kpi"><small>Baixa</small><b>Automática</b></div></div><div class="card"><h2>Cadastrar produto</h2><div class="form"><input type="text" id="pn" placeholder="Nome do produto" aria-label="Nome do produto"><input type="number" id="pq" min="0" placeholder="Quantidade" aria-label="Quantidade em estoque" style="width:120px"><input type="number" id="pm" min="0" placeholder="Mínimo" aria-label="Estoque mínimo" style="width:100px"><select id="pu" aria-label="Procedimento que usa este produto"><option value="">Não usado em procedimento</option>'+po+'</select><input type="number" id="pc" min="1" placeholder="Qtd por atendimento" aria-label="Quantidade usada por atendimento" style="width:160px"><button class="btn" onclick="addProd()">Cadastrar</button></div><p class="empty" style="margin:6px 0 0;font-size:13px">Se escolher um procedimento, o produto sai do estoque sozinho a cada atendimento concluído.</p></div><div class="card"><h2>Estoque</h2>'+h+'</div>'}
+function hero(u){var h=new Date().getHours(),g=h<12?'Bom dia':h<18?'Boa tarde':'Boa noite',n=S.ap.filter(function(a){return !a.st}).length;
+ return '<div class="hero"><div><h1>'+g+', '+esc(u.n.split(' ')[0])+'</h1><p>'+(n?'Você tem '+n+(n>1?' atendimentos':' atendimento')+' hoje.':'Agenda em dia por hoje.')+'</p></div><span class="pill">'+new Date().toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'long'})+'</span></div>'}
+var ROLES={admin:'Administrador',pro:'Profissional',rec:'Recepção'},PERM={admin:['at','fi','es','us'],pro:['at'],rec:['at','es']};
+function cur(){return S.users.filter(function(x){return x.id===S.me&&x.a})[0]}
+function admins(){return S.users.filter(function(x){return x.p==='admin'&&x.a})}
+function login(){var e=document.getElementById('le').value.trim().toLowerCase(),w=document.getElementById('ls').value,
+ u=S.users.filter(function(x){return x.e.toLowerCase()===e&&x.s===w&&x.a})[0];
+ if(!u){toast('E-mail ou senha incorretos, ou usuário inativo');return}
+ S.me=u.id;tab='at';save();render()}
+function logout(){S.me=0;save();render()}
+function addU(){var n=document.getElementById('un').value.trim(),e=document.getElementById('ue').value.trim(),w=document.getElementById('us').value,r=document.getElementById('ur').value;
+ if(!n||e.indexOf('@')<1){toast('Informe o nome e um e-mail válido');return}
+ if(w.length<6){toast('A senha precisa ter pelo menos 6 caracteres');return}
+ if(S.users.some(function(x){return x.e.toLowerCase()===e.toLowerCase()})){toast('Já existe um usuário com esse e-mail');return}
+ S.users.push({id:S.nid++,n:n,e:e,s:w,p:r,a:1});save();render();toast('Usuário criado: '+n)}
+function uOf(id){return S.users.filter(function(x){return x.id===id})[0]}
+function lastAdmin(u){return u.p==='admin'&&u.a&&admins().length<2}
+function setRole(id,r){var u=uOf(id);if(lastAdmin(u)&&r!=='admin'){toast('Mantenha pelo menos um administrador ativo');render();return}u.p=r;save();render();toast('Perfil atualizado')}
+function toggleU(id){var u=uOf(id);if(lastAdmin(u)){toast('Mantenha pelo menos um administrador ativo');return}u.a=u.a?0:1;save();render();toast(u.a?'Usuário ativado':'Usuário desativado')}
+function delU(id){var u=uOf(id);if(lastAdmin(u)){toast('Mantenha pelo menos um administrador ativo');return}S.users=S.users.filter(function(x){return x.id!==id});save();render();toast('Usuário excluído')}
+function vLogin(){return '<div class="card" style="max-width:380px;margin:40px auto"><h2>Entrar</h2><div class="form" style="flex-direction:column"><input type="text" id="le" placeholder="E-mail" aria-label="E-mail"><input type="password" id="ls" placeholder="Senha" aria-label="Senha" onkeydown="if(event.key===\'Enter\')login()"><button class="btn" onclick="login()">Entrar</button></div><p class="empty" style="font-size:13px;margin:8px 0 0">Acesso de demonstração: admin@clinica.com · senha admin123</p></div>'}
+function vUs(){var h='',ro='';for(var k in ROLES)ro+='<option value="'+k+'">'+ROLES[k]+'</option>';
+ S.users.forEach(function(u){var self=u.id===S.me,r='';for(var k in ROLES)r+='<option value="'+k+'"'+(u.p===k?' selected':'')+'>'+ROLES[k]+'</option>';
+  h+='<div class="row"><div class="l"><b>'+esc(u.n)+(self?' (você)':'')+'</b><span>'+esc(u.e)+'</span></div><select aria-label="Perfil de '+esc(u.n)+'" onchange="setRole('+u.id+',this.value)"'+(self?' disabled':'')+'>'+r+'</select><span class="tag '+(u.a?'ok':'low')+'">'+(u.a?'Ativo':'Inativo')+'</span>'+(self?'':'<button class="btn g" onclick="toggleU('+u.id+')">'+(u.a?'Desativar':'Ativar')+'</button><button class="btn g" onclick="delU('+u.id+')">Excluir</button>')+'</div>'});
+ return '<div class="card"><h2>Novo usuário</h2><div class="form"><input type="text" id="un" placeholder="Nome" aria-label="Nome"><input type="text" id="ue" placeholder="E-mail" aria-label="E-mail"><input type="password" id="us" placeholder="Senha (mín. 6)" aria-label="Senha"><select id="ur" aria-label="Perfil">'+ro+'</select><button class="btn" onclick="addU()">Criar usuário</button></div><p class="empty" style="margin:6px 0 0;font-size:13px">Administrador vê tudo. Recepção acessa Atendimento e Estoque. Profissional acessa só o Atendimento.</p></div><div class="card"><h2>Usuários</h2>'+h+'</div>'}
+function render(){
+ var T={at:'Atendimento',fi:'Financeiro',es:'Estoque',us:'Usuários'},u=cur(),n='',nv=document.getElementById('nav'),wh=document.getElementById('who'),v=document.getElementById('v');
+ if(!u){nv.innerHTML='';wh.innerHTML='';v.innerHTML=vLogin();return}
+ var ok=PERM[u.p];if(ok.indexOf(tab)<0)tab=ok[0];
+ ok.forEach(function(k){n+='<button class="'+(k===tab?'on':'')+'" onclick="setTab(\''+k+'\')">'+T[k]+'</button>'});
+ nv.innerHTML=n;
+ wh.innerHTML='<span class="pill">'+esc(u.n)+' · '+ROLES[u.p]+'</span><button class="btn g" onclick="logout()">Sair</button>';
+ v.innerHTML=hero(u)+(tab==='at'?vAt():tab==='fi'?vFi():tab==='es'?vEs():vUs())}
+render();
+</script>
+</body>
+</html>
